@@ -111,8 +111,8 @@ El diseño completo, las relaciones y las decisiones están en [docs/modelo-rela
 - El servidor recalcula precios y disponibilidad: el navegador nunca decide el precio.
 - Credenciales fuera del repositorio (`includes/config.local.php`).
 
-## Autor
+## Autores
 
-**Santiago Cardenas Claros**
+**Santiago Cardenas Claros** **Marianna Cubillos Polania** **Alejandro Barreiro Montealegre*
 
 El nombre, el logo, el menú y los datos de contacto pertenecen a Destino Café Pizza Pan y se usan con fines académicos.
