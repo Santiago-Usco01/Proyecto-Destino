@@ -1,0 +1,7 @@
+# Aquí solo se guardan imágenes: nunca se ejecuta código.
+<IfModule php_module>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh|htaccess)$">
+    Require all denied
+</FilesMatch>

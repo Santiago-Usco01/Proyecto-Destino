@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------- Credenciales y configuración local
+# Datos de conexión a MySQL de cada equipo (plantilla: includes/config.ejemplo.php)
+includes/config.local.php
+# Contraseña generada por database/crear-admin.php
+database/admin-local.txt
+*.local.txt
+.env
+.env.*
+
+# ---------------------------------------------------------------- Base de datos
+# Respaldos o exportaciones con datos reales de clientes (pedidos, reservas).
+# Solo se versiona database/destino.sql (estructura y datos iniciales).
+database/respaldos/
+database/*.local.sql
+*.sql.gz
+*.sql.zip
+
+# ---------------------------------------------------------------- Imágenes subidas desde el panel
+uploads/productos/*
+!uploads/productos/.htaccess
+!uploads/productos/.gitkeep
+
+# ---------------------------------------------------------------- Temporales y registros
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# ---------------------------------------------------------------- Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---------------------------------------------------------------- Editores
+.vscode/
+.idea/
+*.code-workspace
