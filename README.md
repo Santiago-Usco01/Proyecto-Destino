@@ -113,6 +113,6 @@ El diseño completo, las relaciones y las decisiones están en [docs/modelo-rela
 
 ## Autores
 
-**Santiago Cardenas Claros** **Marianna Cubillos Polania** **Alejandro Barreiro Montealegre*
+**Santiago Cardenas Claros**    **Marianna Cubillos Polania**    **Alejandro Barreiro Montealegre**
 
 El nombre, el logo, el menú y los datos de contacto pertenecen a Destino Café Pizza Pan y se usan con fines académicos.
