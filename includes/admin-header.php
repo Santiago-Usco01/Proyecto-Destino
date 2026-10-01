@@ -49,6 +49,11 @@ $secciones = [
 </header>
 
 <main class="contenedor admin__contenido">
-    <?php foreach (obtener_flash() as $m): ?>
-        <div class="aviso aviso--<?= e($m['tipo']) ?>" role="status"><?= e($m['mensaje']) ?></div>
-    <?php endforeach; ?>
+    <?php $mensajes_flash = obtener_flash(); ?>
+    <?php if ($mensajes_flash): ?>
+        <div class="avisos">
+            <?php foreach ($mensajes_flash as $m): ?>
+                <div class="aviso aviso--<?= e($m['tipo']) ?>" role="status"><span class="aviso__texto"><?= e($m['mensaje']) ?></span></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>

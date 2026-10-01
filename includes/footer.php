@@ -49,6 +49,7 @@ $scripts_pagina ??= [];
 
 <script>window.DESTINO = { baseUrl: <?= json_encode(BASE_URL) ?> };</script>
 <script src="<?= url('assets/js/main.js') ?>"></script>
+<script src="<?= url('assets/js/avisos.js') ?>"></script>
 <?php foreach ($scripts_pagina as $script): ?>
     <script src="<?= url($script) ?>"></script>
 <?php endforeach; ?>
