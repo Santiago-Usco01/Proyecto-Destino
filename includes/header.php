@@ -63,7 +63,7 @@ $enlaces = [
                                class="navegacion__enlace<?= $pagina_actual === 'cuenta' ? ' activo' : '' ?>">Mi cuenta</a>
                         </li>
                     <?php endif; ?>
-                    <li><a href="<?= url('logout.php') ?>" class="navegacion__enlace">Salir</a></li>
+                    <li><a href="<?= url('logout.php') ?>?csrf=<?= csrf_token() ?>" class="navegacion__enlace">Salir</a></li>
                 <?php else: ?>
                     <li><a href="<?= url('login.php') ?>" class="navegacion__enlace">Ingresar</a></li>
                 <?php endif; ?>

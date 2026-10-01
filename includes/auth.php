@@ -55,20 +55,29 @@ function cerrar_sesion(): void
     session_destroy();
 }
 
+/** Ruta interna segura (sin esquema ni host) para volver tras iniciar sesión; si no, null. */
+function destino_seguro(mixed $ruta): ?string
+{
+    if (!is_string($ruta) || $ruta === '' || strlen($ruta) > 200) {
+        return null;
+    }
+    return preg_match('/^[a-z0-9\-]+(\/[a-z0-9\-]+)*\.php(\?[\w=&%\-]*)?$/i', $ruta) ? $ruta : null;
+}
+
 // ---------------------------------------------------------------- Control de acceso
 
 function requerir_login(): void
 {
     if (!esta_logueado()) {
         flash('info', 'Inicia sesión para continuar.');
-        redirigir('login.php');
+        $actual = ltrim(substr($_SERVER['REQUEST_URI'] ?? '', strlen(BASE_URL)), '/');
+        redirigir('login.php' . (destino_seguro($actual) ? '?volver=' . urlencode($actual) : ''));
     }
 }
 
 function requerir_admin(): void
 {
     if (!es_admin()) {
-        http_response_code(403);
         flash('error', 'No tienes permiso para acceder a esa sección.');
         redirigir(esta_logueado() ? 'index.php' : 'login.php');
     }
