@@ -1,0 +1,49 @@
+/* =============================================================================
+   DESTINO — Panel de administración (se suma a estilos.css)
+   ============================================================================= */
+
+.admin__barra { background: var(--cafe-900); color: var(--crema-100); }
+.admin__barra-contenido { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 12px; }
+.admin__marca { font-family: var(--fuente-titulos); font-weight: 700; font-size: 1.15rem; color: var(--crema-100); text-decoration: none; }
+.admin__nav { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.admin__nav a { display: block; padding: 6px 12px; border-radius: var(--radio-sm); color: var(--cafe-300); text-decoration: none; font-weight: 600; }
+.admin__nav a:hover, .admin__nav a.activo { background: var(--cafe-700); color: var(--blanco); }
+.admin__usuario { margin-left: auto; display: flex; gap: 16px; }
+.admin__usuario a { color: var(--cafe-300); font-size: .9rem; }
+
+.admin__contenido { padding-block: 28px 64px; display: grid; gap: 20px; align-content: start; }
+.admin__titulo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.admin__titulo h1 { margin: 0; font-size: 1.8rem; }
+
+.admin__tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.admin__dato { display: block; text-decoration: none; color: inherit; }
+.admin__dato strong { display: block; font-family: var(--fuente-titulos); font-size: 2.2rem; color: var(--primario); }
+.admin__dato span { color: var(--texto-suave); font-weight: 600; }
+
+.admin__filtros { display: flex; flex-wrap: wrap; gap: 8px; }
+.admin__filtros a { padding: 6px 14px; border: 1px solid var(--borde); border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .9rem; color: var(--texto); background: var(--blanco); }
+.admin__filtros a.activo { background: var(--primario); border-color: var(--primario); color: var(--blanco); }
+
+.tabla-envoltorio { overflow-x: auto; }
+.tabla { width: 100%; border-collapse: collapse; background: var(--blanco); font-size: .95rem; }
+.tabla th, .tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); vertical-align: top; }
+.tabla th { background: var(--fondo-alterno); font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; color: var(--texto-suave); }
+.tabla td.num, .tabla th.num { text-align: right; white-space: nowrap; }
+.tabla .acciones { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabla img.miniatura { width: 48px; height: 48px; object-fit: cover; border-radius: var(--radio-sm); }
+.tabla form { display: contents; }
+.tabla select, .tabla input[type="text"] { font: inherit; padding: 6px 8px; border: 1px solid var(--borde); border-radius: var(--radio-sm); max-width: 100%; }
+.tabla .inactivo { opacity: .55; }
+
+.etiqueta--error { background: var(--error-fondo); color: var(--error); }
+.etiqueta--aviso { background: #fdf2dc; color: #8a5a00; }
+
+.admin__rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; align-items: start; }
+.admin__formulario { max-width: 760px; }
+.campo--check { display: flex; align-items: center; gap: 8px; }
+.campo--check label { font-weight: 600; }
+.campo input[type="file"] { padding: 8px; }
+.admin__vista-imagen { width: 120px; height: 120px; object-fit: cover; border-radius: var(--radio); border: 1px solid var(--borde); }
+.boton--peligro { background: transparent; border-color: var(--error); color: var(--error); }
+.boton--peligro:hover { background: var(--error); color: var(--blanco); }
+.admin__vacio { padding: 32px; text-align: center; color: var(--texto-suave); }
