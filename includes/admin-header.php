@@ -2,7 +2,7 @@
 /**
  * Encabezado del panel. Antes de incluirlo, la página define:
  *   $titulo_pagina (string)
- *   $seccion       ('inicio', 'pedidos', 'reservas', 'productos', 'categorias', 'sedes')
+ *   $seccion       ('inicio', 'pedidos', 'reservas', 'productos', 'categorias', 'sedes', 'usuarios')
  */
 $titulo_pagina ??= 'Panel';
 $seccion ??= '';
@@ -14,6 +14,7 @@ $secciones = [
     'productos'  => ['Productos', 'admin/productos.php'],
     'categorias' => ['Categorías', 'admin/categorias.php'],
     'sedes'      => ['Sedes', 'admin/sedes.php'],
+    'usuarios'   => ['Usuarios', 'admin/usuarios.php'],
 ];
 ?>
 <!DOCTYPE html>

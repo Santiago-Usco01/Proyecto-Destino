@@ -66,8 +66,31 @@ function destino_seguro(mixed $ruta): ?string
 
 // ---------------------------------------------------------------- Control de acceso
 
+/**
+ * Comprueba en la BD que el usuario de la sesión siga activo y refresca su rol,
+ * para que desactivar o cambiar de rol a una cuenta surta efecto de inmediato.
+ */
+function refrescar_usuario_sesion(): void
+{
+    $u = usuario_actual();
+    if ($u === null) {
+        return;
+    }
+    $consulta = db()->prepare('SELECT u.nombre, u.email, u.activo, r.nombre AS rol
+                               FROM usuarios u JOIN roles r ON r.id = u.rol_id WHERE u.id = ?');
+    $consulta->execute([$u['id']]);
+    $bd = $consulta->fetch();
+    if (!$bd || (int) $bd['activo'] !== 1) {
+        unset($_SESSION['usuario']);
+        flash('error', 'Tu cuenta está desactivada.');
+        return;
+    }
+    $_SESSION['usuario'] = ['id' => $u['id'], 'nombre' => $bd['nombre'], 'email' => $bd['email'], 'rol' => $bd['rol']];
+}
+
 function requerir_login(): void
 {
+    refrescar_usuario_sesion();
     if (!esta_logueado()) {
         flash('info', 'Inicia sesión para continuar.');
         $actual = ltrim(substr($_SERVER['REQUEST_URI'] ?? '', strlen(BASE_URL)), '/');
