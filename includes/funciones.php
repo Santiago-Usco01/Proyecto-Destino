@@ -228,3 +228,21 @@ function sedes_activas(): array
     return db()->query('SELECT id, nombre, direccion, telefono, whatsapp, horario, url_mapa
                         FROM sedes WHERE activo = 1 ORDER BY id')->fetchAll();
 }
+
+// Estados de pedidos y reservas (etiquetas para el cliente y el panel).
+const ESTADOS_PEDIDO = [
+    'pendiente_confirmacion' => 'Pendiente de confirmación',
+    'confirmado'             => 'Confirmado',
+    'en_preparacion'         => 'En preparación',
+    'en_camino'              => 'En camino',
+    'entregado'              => 'Entregado',
+    'cancelado'              => 'Cancelado',
+];
+
+const ESTADOS_RESERVA = [
+    'pendiente'  => 'Pendiente',
+    'confirmada' => 'Confirmada',
+    'rechazada'  => 'Rechazada',
+    'cancelada'  => 'Cancelada',
+    'atendida'   => 'Atendida',
+];

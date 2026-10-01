@@ -3,6 +3,7 @@
  * Pedidos: listado con filtro por estado y detalle (cambiar estado y costo de domicilio).
  */
 require __DIR__ . '/../includes/admin.php';
+require __DIR__ . '/../includes/pedidos.php';   // METODOS_PAGO
 
 $detalle_id = id_recibido();
 

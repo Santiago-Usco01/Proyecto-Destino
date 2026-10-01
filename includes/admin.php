@@ -9,23 +9,6 @@ require_once __DIR__ . '/init.php';
 requerir_login();
 requerir_admin();
 
-const ESTADOS_PEDIDO = [
-    'pendiente_confirmacion' => 'Pendiente de confirmación',
-    'confirmado'             => 'Confirmado',
-    'en_preparacion'         => 'En preparación',
-    'en_camino'              => 'En camino',
-    'entregado'              => 'Entregado',
-    'cancelado'              => 'Cancelado',
-];
-
-const ESTADOS_RESERVA = [
-    'pendiente'  => 'Pendiente',
-    'confirmada' => 'Confirmada',
-    'rechazada'  => 'Rechazada',
-    'cancelada'  => 'Cancelada',
-    'atendida'   => 'Atendida',
-];
-
 const IMAGEN_MAX_BYTES = 2 * 1024 * 1024;
 const IMAGEN_TIPOS = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
 

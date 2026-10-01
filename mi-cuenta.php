@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pedidos = db()->prepare('SELECT p.id, p.total, p.estado, p.created_at, s.nombre AS sede
+$pedidos = db()->prepare('SELECT p.id, p.subtotal, p.total, p.estado, p.created_at, s.nombre AS sede
                           FROM pedidos p JOIN sedes s ON s.id = p.sede_id
                           WHERE p.usuario_id = ? ORDER BY p.created_at DESC LIMIT 10');
 $pedidos->execute([$id]);
@@ -79,7 +79,7 @@ $reservas = db()->prepare('SELECT r.id, r.fecha, r.hora, r.num_personas, r.estad
 $reservas->execute([$id]);
 $reservas = $reservas->fetchAll();
 
-$etiqueta = fn(string $estado): string => ucfirst(str_replace('_', ' ', $estado));
+$etiqueta = fn(string $estado, array $catalogo): string => $catalogo[$estado] ?? ucfirst(str_replace('_', ' ', $estado));
 
 $titulo_pagina = 'Mi cuenta';
 $pagina_actual = 'cuenta';
@@ -149,7 +149,7 @@ require __DIR__ . '/includes/header.php';
                 <?php foreach ($pedidos as $p): ?>
                     <div>
                         <dt><?= e(codigo_pedido((int) $p['id'])) ?> · <?= e($p['sede']) ?> · <?= e(fecha_legible(substr($p['created_at'], 0, 10))) ?></dt>
-                        <dd><?= e(precio((int) $p['total'])) ?> · <?= e($etiqueta($p['estado'])) ?></dd>
+                        <dd><?= $p['total'] === null ? e(precio((int) $p['subtotal'])) . ' + domicilio' : e(precio((int) $p['total'])) ?> · <?= e($etiqueta($p['estado'], ESTADOS_PEDIDO)) ?></dd>
                     </div>
                 <?php endforeach; ?>
             </dl>
@@ -165,7 +165,7 @@ require __DIR__ . '/includes/header.php';
                 <?php foreach ($reservas as $r): ?>
                     <div>
                         <dt><?= e(codigo_reserva((int) $r['id'])) ?> · <?= e($r['sede']) ?> · <?= e(fecha_legible($r['fecha'])) ?>, <?= e(hora_legible($r['hora'])) ?></dt>
-                        <dd><?= (int) $r['num_personas'] ?> pers. · <?= e($etiqueta($r['estado'])) ?></dd>
+                        <dd><?= (int) $r['num_personas'] ?> pers. · <?= e($etiqueta($r['estado'], ESTADOS_RESERVA)) ?></dd>
                     </div>
                 <?php endforeach; ?>
             </dl>
