@@ -39,8 +39,8 @@ require __DIR__ . '/includes/header.php';
             <img src="<?= url('assets/img/logo-claro.png') ?>" alt="<?= e(NEGOCIO_NOMBRE) ?>" width="389" height="196">
         </h1>
         <p class="hero__texto">
-            Café de la mañana, pan recién horneado, desayunos con sabor huilense
-            , y desde las 4 de la tarde, pizzas y hamburguesas. En <?= e(NEGOCIO_CIUDAD) ?>.
+            Café de la mañana, pan recién horneado, desayunos con sabor huilense,
+            y desde las 4 de la tarde, pizzas y hamburguesas. En <?= e(NEGOCIO_CIUDAD) ?>.
         </p>
         <div class="hero__acciones">
             <a href="<?= url('menu.php') ?>" class="boton boton--claro">Ver el menú</a>
