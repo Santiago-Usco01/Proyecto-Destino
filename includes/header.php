@@ -86,7 +86,7 @@ $enlaces = [
     <?php if ($mensajes_flash): ?>
         <div class="contenedor avisos">
             <?php foreach ($mensajes_flash as $m): ?>
-                <div class="aviso aviso--<?= e($m['tipo']) ?>" role="status"><?= e($m['mensaje']) ?></div>
+                <div class="aviso aviso--<?= e($m['tipo']) ?>" role="status"><span class="aviso__texto"><?= e($m['mensaje']) ?></span></div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
