@@ -38,4 +38,6 @@ Si la carpeta no se llama `destino`, cambiar `BASE_URL` en `includes/config.php`
 
 - Toda salida a HTML pasa por `e()`; todas las consultas son sentencias preparadas PDO; los formularios llevan token CSRF (`auth.php`).
 - Códigos legibles: `codigo_pedido()` → `DST-000123`, `codigo_reserva()` → `RES-000007`; precios con `precio()`; rutas con `url()` y `redirigir()` (respetan `BASE_URL`).
-- Pendiente según el README: registro/login/"Mi cuenta" y panel de administración (`auth.php` ya tiene sesión y roles; las subidas irían a `uploads/productos/`).
+- **Panel de administración** (`admin/`): resumen, pedidos, reservas, productos, categorías, sedes y usuarios. Cada página empieza con `require __DIR__ . '/../includes/admin.php'` (exige login y rol `administrador`) y usa `admin-header.php`/`admin-footer.php`; para añadir una sección hay que registrarla en `$secciones` de `admin-header.php`. Las imágenes de producto se suben a `uploads/productos/`.
+- **Sesión revalidada**: `requerir_login()` llama a `refrescar_usuario_sesion()` (`auth.php`), que consulta la BD en cada página protegida: si la cuenta se desactivó se cierra la sesión, y si cambió de rol se aplica el nuevo. `admin/usuarios.php` impide que un administrador se quite el rol o se desactive a sí mismo.
+- Las contraseñas de cuentas reales (p. ej. del admin) nunca van en el repositorio ni dentro de `htdocs`.
