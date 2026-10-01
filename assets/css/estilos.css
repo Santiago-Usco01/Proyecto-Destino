@@ -339,7 +339,9 @@ p { margin: 0 0 1em; }
     display: grid;
     gap: 18px;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    align-items: start;
 }
+.campo--doble > .campo { align-content: start; }
 
 .campo label { font-weight: 700; font-size: .95rem; }
 .campo .opcional { font-weight: 400; color: var(--texto-suave); }
@@ -358,7 +360,7 @@ p { margin: 0 0 1em; }
     color: var(--texto);
     font: inherit;
 }
-.campo textarea { min-height: 110px; resize: vertical; }
+.campo textarea { min-height: 110px; resize: none; }
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus { border-color: var(--primario); outline: none; box-shadow: 0 0 0 3px rgba(123, 30, 43, .15); }

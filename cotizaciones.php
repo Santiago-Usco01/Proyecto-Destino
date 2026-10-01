@@ -60,7 +60,7 @@ require __DIR__ . '/includes/header.php';
     <section class="cotizacion" id="mayoristas" aria-labelledby="titulo-mayoristas">
         <div class="cotizacion__info">
             <span class="antetitulo">Mayoristas</span>
-            <h2 id="titulo-mayoristas">Pan al por mayor para restaurantes</h2>
+            <h2 id="titulo-mayoristas">Pan al por mayor</h2>
             <p>
                 ¿Tienes un restaurante, cafetería o negocio de comidas? Te ofrecemos pan de nuestra
                 panadería al por mayor. Escríbenos qué productos y cantidades necesitas, y con qué

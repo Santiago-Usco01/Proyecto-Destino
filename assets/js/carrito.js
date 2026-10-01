@@ -179,10 +179,8 @@ function cambiar(id, cantidad) {
 }
 
 el.vaciar.addEventListener('click', () => {
-    if (confirm('¿Quieres quitar todos los productos del carrito?')) {
-        Carrito.vaciar();
-        dibujar();
-    }
+    Carrito.vaciar();
+    dibujar();
 });
 
 el.continuar.addEventListener('click', (evento) => {
