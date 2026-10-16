@@ -1,7 +1,7 @@
 <?php
 /**
  * Inicio de sesión.
- * Limita los intentos fallidos por sesión y no revela si el correo existe.
+ * Limita los intentos fallidos por correo y por IP (tabla intentos_login) y no revela si el correo existe.
  */
 require __DIR__ . '/includes/init.php';
 
@@ -11,8 +11,6 @@ if (esta_logueado()) {
     redirigir($volver ?? (es_admin() ? 'admin/index.php' : 'mi-cuenta.php'));
 }
 
-const LOGIN_MAX_INTENTOS = 5;
-const LOGIN_BLOQUEO_SEG  = 300;
 // Hash de relleno: se verifica cuando el correo no existe para no filtrarlo por tiempo de respuesta.
 const HASH_RELLENO = '$2y$10$abcdefghijklmnopqrstuuYhQ1p5Z0m3q6yWnq3b5eJ8nXvR2sT4K';
 
@@ -26,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = validar_email($email_valor);
     $clave = is_string($_POST['password'] ?? null) ? $_POST['password'] : '';
 
-    if (($_SESSION['login_bloqueo'] ?? 0) > time()) {
-        $errores['general'] = 'Demasiados intentos. Espera unos minutos e inténtalo de nuevo.';
+    if (login_bloqueado($email)) {
+        $errores['general'] = 'Demasiados intentos. Espera ' . LOGIN_VENTANA_MIN . ' minutos e inténtalo de nuevo.';
     } else {
         $usuario_bd = null;
         if ($email !== null) {
@@ -46,16 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ->execute([password_hash($clave, PASSWORD_DEFAULT), $usuario_bd['id']]);
             }
             iniciar_sesion($usuario_bd);
-            unset($_SESSION['login_fallos'], $_SESSION['login_bloqueo']);
+            login_limpiar($email);
             flash('exito', 'Bienvenido, ' . $usuario_bd['nombre'] . '.');
             redirigir($volver ?? ($usuario_bd['rol'] === 'administrador' ? 'admin/index.php' : 'mi-cuenta.php'));
         }
 
-        $_SESSION['login_fallos'] = ($_SESSION['login_fallos'] ?? 0) + 1;
-        if ($_SESSION['login_fallos'] >= LOGIN_MAX_INTENTOS) {
-            $_SESSION['login_bloqueo'] = time() + LOGIN_BLOQUEO_SEG;
-            $_SESSION['login_fallos'] = 0;
-        }
+        login_registrar_fallo($email);
         $errores['general'] = 'Correo o contraseña incorrectos.';
     }
 }

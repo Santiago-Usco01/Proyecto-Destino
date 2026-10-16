@@ -2,8 +2,8 @@
 --  DESTINO CAFÉ PIZZA PAN — Base de datos
 --  Motor: MariaDB 10.4 (XAMPP) · InnoDB · utf8mb4
 --
---  Tablas (8): roles, usuarios, categorias, productos, sedes,
---              pedidos, detalle_pedido, reservas
+--  Tablas (9): roles, usuarios, categorias, productos, sedes,
+--              pedidos, detalle_pedido, reservas, intentos_login
 --
 --  Criterios:
 --   - Precios en pesos colombianos enteros (INT UNSIGNED, sin decimales).
@@ -219,6 +219,24 @@ CREATE TABLE reservas (
     FOREIGN KEY (sede_id) REFERENCES sedes (id)
     ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT chk_reservas_personas CHECK (num_personas BETWEEN 1 AND 40)
+) ENGINE=InnoDB;
+
+
+-- -----------------------------------------------------------------------------
+-- intentos_login
+--   Inicios de sesión fallidos y registros de cuenta, para limitar la fuerza
+--   bruta y la creación masiva de cuentas por correo y por IP.
+--   Son datos de seguridad temporales: se purgan solos (no son históricos).
+-- -----------------------------------------------------------------------------
+CREATE TABLE intentos_login (
+  id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  tipo       ENUM('login','registro') NOT NULL DEFAULT 'login',
+  email     VARCHAR(150) NULL,
+  ip         VARCHAR(45)  NOT NULL,
+  created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_intentos_email (email, created_at),
+  KEY idx_intentos_ip (ip, created_at)
 ) ENGINE=InnoDB;
 
 

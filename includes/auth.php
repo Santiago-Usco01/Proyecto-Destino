@@ -64,6 +64,68 @@ function destino_seguro(mixed $ruta): ?string
     return preg_match('/^[a-z0-9\-]+(\/[a-z0-9\-]+)*\.php(\?[\w=&%\-]*)?$/i', $ruta) ? $ruta : null;
 }
 
+// ---------------------------------------------------------------- Límite de intentos (login y registro)
+// Tabla intentos_login: la columna tipo separa los fallos de login de los registros.
+
+const LOGIN_MAX_POR_EMAIL = 5;     // fallos permitidos por correo dentro de la ventana
+const LOGIN_MAX_POR_IP    = 20;    // fallos permitidos por IP dentro de la ventana
+const LOGIN_VENTANA_MIN   = 15;    // minutos que cuenta cada fallo
+
+const REGISTRO_MAX_POR_IP  = 5;    // cuentas (o intentos con correo repetido) por IP dentro de la ventana
+const REGISTRO_VENTANA_MIN = 60;
+
+/** Cuenta los intentos de un tipo hechos por una IP o un correo desde hace $minutos. */
+function contar_intentos(string $tipo, string $campo, string $valor, int $minutos): int
+{
+    $consulta = db()->prepare("SELECT COUNT(*) FROM intentos_login WHERE tipo = ? AND $campo = ? AND created_at >= ?");
+    $consulta->execute([$tipo, $valor, date('Y-m-d H:i:s', time() - $minutos * 60)]);
+    return (int) $consulta->fetchColumn();
+}
+
+/** Guarda un intento y, de vez en cuando, purga los de más de un día. */
+function registrar_intento(string $tipo, ?string $email): void
+{
+    db()->prepare('INSERT INTO intentos_login (tipo, email, ip, created_at) VALUES (?, ?, ?, ?)')
+        ->execute([$tipo, $email, $_SERVER['REMOTE_ADDR'] ?? '', date('Y-m-d H:i:s')]);
+    if (random_int(1, 20) === 1) {
+        db()->prepare('DELETE FROM intentos_login WHERE created_at < ?')
+            ->execute([date('Y-m-d H:i:s', time() - 86400)]);
+    }
+}
+
+/** True si el correo o la IP superaron el límite de fallos de login recientes. */
+function login_bloqueado(?string $email): bool
+{
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if (contar_intentos('login', 'ip', $ip, LOGIN_VENTANA_MIN) >= LOGIN_MAX_POR_IP) {
+        return true;
+    }
+    return $email !== null
+        && contar_intentos('login', 'email', $email, LOGIN_VENTANA_MIN) >= LOGIN_MAX_POR_EMAIL;
+}
+
+function login_registrar_fallo(?string $email): void
+{
+    registrar_intento('login', $email);
+}
+
+/** Borra los fallos de un correo tras un inicio de sesión correcto. */
+function login_limpiar(string $email): void
+{
+    db()->prepare("DELETE FROM intentos_login WHERE tipo = 'login' AND email = ?")->execute([$email]);
+}
+
+/** True si esta IP ya creó demasiadas cuentas en la última hora. */
+function registro_bloqueado(): bool
+{
+    return contar_intentos('registro', 'ip', $_SERVER['REMOTE_ADDR'] ?? '', REGISTRO_VENTANA_MIN) >= REGISTRO_MAX_POR_IP;
+}
+
+function registro_registrar_intento(?string $email): void
+{
+    registrar_intento('registro', $email);
+}
+
 // ---------------------------------------------------------------- Control de acceso
 
 /**

@@ -44,7 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores['password2'] = 'Las contraseñas no coinciden.';
     }
 
+    if (!$errores && registro_bloqueado()) {
+        $errores['general'] = 'Se han creado demasiadas cuentas desde esta conexión. Inténtalo de nuevo en ' . REGISTRO_VENTANA_MIN . ' minutos.';
+    }
+
     if (!$errores) {
+        registro_registrar_intento($email);
         $rol = db()->query("SELECT id FROM roles WHERE nombre = 'cliente'")->fetchColumn();
         try {
             db()->prepare('INSERT INTO usuarios (rol_id, nombre, email, telefono, password_hash) VALUES (?, ?, ?, ?, ?)')
@@ -77,7 +82,7 @@ require __DIR__ . '/includes/header.php';
 
 <div class="contenedor pagina-formulario">
     <?php if ($errores): ?>
-        <div class="aviso aviso--error formulario--angosto" role="alert">Revisa los campos marcados.</div>
+        <div class="aviso aviso--error formulario--angosto" role="alert"><?= e($errores['general'] ?? 'Revisa los campos marcados.') ?></div>
     <?php endif; ?>
 
     <form method="post" class="formulario tarjeta formulario--angosto" novalidate>
