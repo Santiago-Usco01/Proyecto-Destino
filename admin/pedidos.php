@@ -29,6 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $detalle_id) {
             db()->prepare('UPDATE pedidos SET costo_domicilio = ? WHERE id = ?')->execute([$valor, $detalle_id]);
             flash('exito', 'Costo de domicilio guardado.');
         }
+    } elseif ($accion === 'eliminar') {
+        // Solo pedidos terminados. detalle_pedido se borra en cascada (FK ON DELETE CASCADE).
+        $borrado = db()->prepare("DELETE FROM pedidos WHERE id = ? AND estado IN ('cancelado', 'entregado')");
+        $borrado->execute([$detalle_id]);
+        if ($borrado->rowCount() > 0) {
+            flash('exito', 'Pedido ' . codigo_pedido($detalle_id) . ' eliminado.');
+            redirigir('admin/pedidos.php');
+        }
+        flash('error', 'Solo se pueden eliminar pedidos cancelados o entregados.');
     }
     redirigir('admin/pedidos.php?id=' . $detalle_id);
 }
@@ -126,6 +135,19 @@ if ($detalle_id) {
                 </div>
                 <button type="submit" class="boton boton--primario boton--pequeno">Guardar costo</button>
             </form>
+            <hr style="border:0;border-top:1px solid var(--borde);margin:20px 0">
+            <?php if (in_array($pedido['estado'], ['cancelado', 'entregado'], true)): ?>
+            <form method="post" class="formulario"
+                  onsubmit="return confirm('¿Eliminar el pedido <?= e(codigo_pedido($detalle_id)) ?> de forma permanente? Esta acción no se puede deshacer.');">
+                <?= csrf_campo() ?>
+                <input type="hidden" name="id" value="<?= $detalle_id ?>">
+                <input type="hidden" name="accion" value="eliminar">
+                <button type="submit" class="boton boton--peligro boton--pequeno">Eliminar pedido</button>
+                <span class="ayuda">Borra el pedido y sus productos de forma definitiva.</span>
+            </form>
+            <?php else: ?>
+            <p class="ayuda">Para poder eliminar este pedido, primero cámbialo a «Cancelado» o «Entregado».</p>
+            <?php endif; ?>
         </section>
     </div>
     <?php

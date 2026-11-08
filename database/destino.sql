@@ -10,7 +10,8 @@
 --   - Teléfonos como texto (VARCHAR).
 --   - Contraseñas solo como hash (password_hash de PHP).
 --   - Los datos históricos no se borran: productos, categorías, sedes y
---     usuarios se desactivan; pedidos y reservas se cancelan.
+--     usuarios se desactivan; pedidos y reservas se cancelan (el admin solo
+--     puede eliminar pedidos ya cancelados o entregados).
 --   - Reglas que dependen de la fecha/hora actual (reserva con un día de
 --     antelación, franjas horarias, local abierto) se validan en PHP con la
 --     zona horaria America/Bogota.
