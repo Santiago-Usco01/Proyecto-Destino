@@ -98,7 +98,7 @@ destino/
 
 ## Base de datos
 
-8 tablas: `roles`, `usuarios`, `categorias`, `productos`, `sedes`, `pedidos`, `detalle_pedido` y `reservas`.
+9 tablas: `roles`, `usuarios`, `categorias`, `productos`, `sedes`, `pedidos`, `detalle_pedido`, `reservas` e `intentos_login`.
 El diseño completo, las relaciones y las decisiones están en [docs/modelo-relacional.md](docs/modelo-relacional.md).
 
 ## Seguridad
@@ -107,6 +107,7 @@ El diseño completo, las relaciones y las decisiones están en [docs/modelo-rela
 - Todas las consultas usan sentencias preparadas (PDO) contra inyección SQL.
 - Toda salida se escapa con `htmlspecialchars()` contra XSS.
 - Token CSRF en los formularios.
+- Límite de intentos en el login (por correo y por IP) y en el registro (por IP), guardado en la base de datos.
 - Cookie de sesión `HttpOnly` y `SameSite=Lax`; el identificador de sesión se regenera al iniciar sesión.
 - El servidor recalcula precios y disponibilidad: el navegador nunca decide el precio.
 - Credenciales fuera del repositorio (`includes/config.local.php`).

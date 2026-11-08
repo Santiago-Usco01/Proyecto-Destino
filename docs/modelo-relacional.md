@@ -23,6 +23,7 @@ Script: [`database/destino.sql`](../database/destino.sql)
 | `pedidos` | Solicitudes de domicilio |
 | `detalle_pedido` | Productos de cada pedido (resuelve la relación N:M) |
 | `reservas` | Solicitudes de reserva de mesa |
+| `intentos_login` | Intentos fallidos de login y registros recientes, para limitar abusos por correo e IP; datos temporales |
 
 ### Tablas descartadas
 
