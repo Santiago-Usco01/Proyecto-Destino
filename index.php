@@ -24,7 +24,14 @@ foreach ($categorias as $c) {
     $franjas[$clave]['categorias'][] = $c;
 }
 
-$total_productos = array_sum(array_column($categorias, 'total'));
+// Foto de fondo de cada franja (misma clave que FRANJAS_MENU).
+$imagenes_franja = [
+    '07:00:00-12:00:00' => 'franja-desayunos.jpg',
+    '07:00:00-22:00:00' => 'franja-panaderia.jpg',
+    '16:00:00-22:00:00' => 'franja-comidas.jpg',
+];
+
+$total_productos =array_sum(array_column($categorias, 'total'));
 $sedes = sedes_activas();
 
 $titulo_pagina = 'Café, panadería y restaurante en Neiva';
@@ -99,7 +106,8 @@ require __DIR__ . '/includes/header.php';
             <?php foreach ($franjas as $franja): ?>
                 <?php $disponible = local_abierto() && en_franja($franja['hora_inicio'], $franja['hora_fin']); ?>
                 <article class="franja">
-                    <header class="franja__encabezado">
+                    <?php $img = $imagenes_franja[$franja['hora_inicio'] . '-' . $franja['hora_fin']] ?? null; ?>
+                    <header class="franja__encabezado"<?= $img ? ' style="--franja-img: url(\'' . e(url('assets/img/' . $img)) . '\')"' : '' ?>>
                         <h3><?= e($franja['nombre']) ?></h3>
                         <p class="franja__horario">
                             <?= e(hora_legible($franja['hora_inicio'])) ?> – <?= e(hora_legible($franja['hora_fin'])) ?>

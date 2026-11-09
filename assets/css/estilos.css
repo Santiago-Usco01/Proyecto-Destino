@@ -536,7 +536,11 @@ p { margin: 0 0 1em; }
 
 .franja__encabezado {
     padding: 24px 24px 20px;
-    background: var(--cafe-700);
+    background-color: var(--cafe-700);
+    /* Foto de la franja (si la hay) con capa oscura para que el texto se lea */
+    background-image: linear-gradient(rgba(35, 20, 14, .55), rgba(35, 20, 14, .75)), var(--franja-img, none);
+    background-size: cover;
+    background-position: center;
     color: var(--crema-200);
 }
 .franja__encabezado h3 { margin-bottom: 4px; color: var(--crema-100); font-size: 1.4rem; }
