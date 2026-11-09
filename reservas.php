@@ -68,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$sede_id || !isset($sedes_por_id[$sede_id])) {
         $errores['sede_id'] = 'Elige la sede.';
     }
-    $fecha_valida = is_string($fecha) && DateTime::createFromFormat('!Y-m-d', $fecha)?->format('Y-m-d') === $fecha;
+    $fecha_obj = is_string($fecha) ? DateTime::createFromFormat('!Y-m-d', $fecha) : false;
+    $fecha_valida = $fecha_obj !== false && $fecha_obj->format('Y-m-d') === $fecha;
     if (!$fecha_valida) {
         $errores['fecha'] = 'Elige la fecha de la reserva.';
     } elseif ($fecha < $fecha_minima) {
