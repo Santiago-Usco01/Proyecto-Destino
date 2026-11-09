@@ -431,10 +431,12 @@ p { margin: 0 0 1em; }
     position: relative;
     overflow: hidden;
     background-color: var(--cafe-900);
+    /* Foto del local con una capa oscura encima para que el texto se lea bien */
     background-image:
-        radial-gradient(ellipse at 20% 10%, rgba(122, 82, 65, .45), transparent 55%),
-        radial-gradient(ellipse at 85% 90%, rgba(123, 30, 43, .35), transparent 55%),
-        repeating-linear-gradient(115deg, rgba(255, 250, 245, .015) 0 2px, transparent 2px 14px);
+        linear-gradient(rgba(35, 20, 14, .68), rgba(35, 20, 14, .78)),
+        url('../img/local-destino.jpg');
+    background-size: cover;
+    background-position: center;
     color: var(--crema-200);
     text-align: center;
 }

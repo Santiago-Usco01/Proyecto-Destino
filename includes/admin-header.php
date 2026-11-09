@@ -26,7 +26,7 @@ $secciones = [
     <title><?= e($titulo_pagina) ?> · Panel · <?= e(NEGOCIO_NOMBRE_CORTO) ?></title>
     <link rel="icon" href="<?= url('assets/img/favicon.svg') ?>" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= url('assets/css/estilos.css') ?>">
+    <link rel="stylesheet" href="<?= url('assets/css/estilos.css') ?>?v=<?= filemtime(__DIR__ . '/../assets/css/estilos.css') ?>">
     <link rel="stylesheet" href="<?= url('assets/css/admin.css') ?>">
 </head>
 <body class="admin">
