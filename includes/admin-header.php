@@ -24,7 +24,8 @@ $secciones = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title><?= e($titulo_pagina) ?> · Panel · <?= e(NEGOCIO_NOMBRE_CORTO) ?></title>
-    <link rel="icon" href="<?= url('assets/img/favicon.svg') ?>" type="image/svg+xml">
+    <link rel="icon" href="<?= url('assets/img/favicon-64.png') ?>?v=2" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="<?= url('assets/img/favicon-180.png') ?>?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= url('assets/css/estilos.css') ?>?v=<?= filemtime(__DIR__ . '/../assets/css/estilos.css') ?>">
     <link rel="stylesheet" href="<?= url('assets/css/admin.css') ?>">

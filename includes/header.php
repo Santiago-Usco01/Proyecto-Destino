@@ -23,7 +23,8 @@ $enlaces = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($titulo_pagina) ?> · <?= e(NEGOCIO_NOMBRE_CORTO) ?></title>
     <meta name="description" content="<?= e(NEGOCIO_NOMBRE) ?>: café, panadería y restaurante en <?= e(NEGOCIO_CIUDAD) ?>. Pide a domicilio o reserva tu mesa.">
-    <link rel="icon" href="<?= url('assets/img/favicon.svg') ?>" type="image/svg+xml">
+    <link rel="icon" href="<?= url('assets/img/favicon-64.png') ?>?v=2" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="<?= url('assets/img/favicon-180.png') ?>?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
