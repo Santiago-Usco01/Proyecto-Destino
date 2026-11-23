@@ -909,9 +909,10 @@ p { margin: 0 0 1em; }
     font-weight: 700;
     text-align: center;
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 .cantidad input::-webkit-inner-spin-button,
-.cantidad input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.cantidad input::-webkit-outer-spin-button { -webkit-appearance: none; appearance: none; margin: 0; }
 
 .carrito__acciones-lista {
     display: flex;
